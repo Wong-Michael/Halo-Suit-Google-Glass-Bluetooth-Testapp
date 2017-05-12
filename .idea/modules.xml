@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Halo-Suit-Google-Glass-Bluetooth-Testapp.iml" filepath="$PROJECT_DIR$/Halo-Suit-Google-Glass-Bluetooth-Testapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pairedDevice.iml" filepath="$PROJECT_DIR$/pairedDevice.iml" />
     </modules>
   </component>
 </project>
