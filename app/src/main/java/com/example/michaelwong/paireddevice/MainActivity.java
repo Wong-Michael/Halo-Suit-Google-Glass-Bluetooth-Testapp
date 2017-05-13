@@ -26,16 +26,18 @@ public class MainActivity extends AppCompatActivity {
     private TextView text1;
     private Thread ConnectThread;
     private Thread ManageThread;
+    ManageThread mManageThread;
     BluetoothAdapter mBluetoothAdapter;
     Set<BluetoothDevice> pairedDevices;
     private BluetoothDevice mmDevice;
     private  BluetoothSocket mmSocket;
+    private InputStream mmInStream;
+    private OutputStream mmOutStream;
 
     private static final UUID insecureUUID = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
     private  class ManageThread extends Thread {
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
+
         private byte[] mmBuffer;
         public ManageThread (){
             InputStream tmpIn = null;
@@ -55,13 +57,7 @@ public class MainActivity extends AppCompatActivity {
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
-        public void write(byte[] bytes) {
-            try {
-                mmOutStream.write(bytes);
-            } catch (IOException e) {
-                Log.i(TAG, "Error occurred when sending data");
-            }
-        }
+
     }
     private class ConnectThread extends Thread {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -122,7 +118,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String test = "{\"head temperature\":\"30\"," +
+                        "\"armpits temperature\":\"30\"," +
+                        "\"crotch temperature\":\"30\"}";
+                try {
+                    mmOutStream.write(test.getBytes());
+                } catch (IOException e) {
+                    Log.i(TAG, "Error occurred when sending data");
+                }
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
