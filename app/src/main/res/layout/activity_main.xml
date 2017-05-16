@@ -1,33 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.michaelwong.paireddevice.MainActivity">
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <EditText
+            android:id="@+id/energyBar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:text="Energy Bar" />
 
-    </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
 
-    <include layout="@layout/content_main" />
+            <Button
+                android:id="@+id/energyBar100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"2 AH battery:100"}' />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+            <Button
+                android:id="@+id/energyBar75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"2 AH battery:75"}' />
 
-</android.support.design.widget.CoordinatorLayout>
+            <Button
+                android:id="@+id/energyBar50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"2 AH battery:50"}' />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/healthBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:text="Health Bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/healthBar100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"8 AH battery:100"}' />
+
+            <Button
+                android:id="@+id/healthBar75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"8 AH battery:75"}' />
+
+            <Button
+                android:id="@+id/healthBar50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"8 AH battery:25"}' />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/headTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:text="Head Temp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/headTemp20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"head temperature:20"}' />
+
+            <Button
+                android:id="@+id/headTemp30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"head temperature:30"}' />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/armpitTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:text="Armpit Temp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/armpitsTemp20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"armpits temperature:20"}' />
+
+            <Button
+                android:id="@+id/armpitsTemp30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"armpits temperature:30"}' />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/crotchTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:text="Crotch Temp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/crotchTemp20"
+                android:layout_width="187dp"
+                android:layout_height="wrap_content"
+                android:text='{"crotch temperature:20"}' />
+
+            <Button
+                android:id="@+id/crotchTemp30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='{"crotch temperature:30"}' />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

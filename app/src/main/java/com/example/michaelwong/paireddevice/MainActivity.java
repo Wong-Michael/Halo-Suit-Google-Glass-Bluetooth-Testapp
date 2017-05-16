@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -23,7 +24,6 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
-    private TextView text1;
     private Thread ConnectThread;
     private Thread ManageThread;
     ManageThread mManageThread;
@@ -110,24 +110,105 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        text1 = (TextView) findViewById(R.id.pairedID);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button healthBar100 = (Button) findViewById(R.id.healthBar100);
+        healthBar100.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String test = "{\"head temperature\":\"30\"," +
-                        "\"armpits temperature\":\"30\"," +
-                        "\"crotch temperature\":\"30\"}";
-                try {
-                    mmOutStream.write(test.getBytes());
-                } catch (IOException e) {
-                    Log.i(TAG, "Error occurred when sending data");
-                }
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String string = "{\"8 AH battery\":\"100\"}";
+                write(string);
+            }
+        });
+        Button healthBar75 = (Button) findViewById(R.id.healthBar75);
+        healthBar75.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"8 AH battery\":\"75\"}";
+                write(string);
+            }
+        });
+        Button healthBar50 = (Button) findViewById(R.id.healthBar50);
+        healthBar50.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"8 AH battery\":\"50\"}";
+                write(string);
+            }
+        });
+
+        Button energyBar100 = (Button) findViewById(R.id.energyBar100);
+        energyBar100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"2 AH battery\":\"100\"}";
+                write(string);
+            }
+        });
+        Button energyBar75 = (Button) findViewById(R.id.energyBar75);
+        energyBar75.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"2 AH battery\":\"75\"}";
+                write(string);
+            }
+        });
+        Button energyBar50 = (Button) findViewById(R.id.energyBar50);
+        energyBar50.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"2 AH battery\":\"50\"}";
+                write(string);
+            }
+        });
+
+        Button headTemp20 = (Button) findViewById(R.id.headTemp20);
+        headTemp20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"head temperature\":\"20\"}";
+                write(string);
+            }
+        });
+        Button headTemp30 = (Button) findViewById(R.id.headTemp30);
+        headTemp30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"head temperature\":\"30\"}";
+                write(string);
+            }
+        });
+
+        Button armpitsTemp20 = (Button) findViewById(R.id.armpitsTemp20);
+        armpitsTemp20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"armpits temperature\":\"20\"}";
+                write(string);
+            }
+        });
+        Button armpitsTemp30 = (Button) findViewById(R.id.armpitsTemp30);
+        armpitsTemp30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"armpits temperature\":\"30\"}";
+                write(string);
+            }
+        });
+
+        Button crotchTemp20 = (Button) findViewById(R.id.crotchTemp20);
+        crotchTemp20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"crotch temperature\":\"20\"}";
+                write(string);
+            }
+        });
+        Button crotchTemp30 = (Button) findViewById(R.id.crotchTemp30);
+        crotchTemp30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String string = "{\"crotch temperature\":\"30\"}";
+                write(string);
             }
         });
     }
@@ -163,5 +244,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void write (String string) {
+        try {
+            mmOutStream.write(string.getBytes());
+        } catch (IOException e) {
+            Log.i(TAG,"Error occurred when sending data");
+        }
     }
 }
