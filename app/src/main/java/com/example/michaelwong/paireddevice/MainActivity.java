@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
     private Thread ConnectThread;
     private Thread ManageThread;
-    ManageThread mManageThread;
     BluetoothAdapter mBluetoothAdapter;
     Set<BluetoothDevice> pairedDevices;
     private BluetoothDevice mmDevice;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final UUID insecureUUID = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
-    private  class ManageThread extends Thread {
+    private class ManageThread extends Thread {
 
         private byte[] mmBuffer;
         public ManageThread (){
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     private class ConnectThread extends Thread {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         public ConnectThread() {
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Unable to connect; close the socket and return.
             }
-            Log.i(TAG, "Running connect() completed with" + mmSocket.isConnected());
+            Log.i(TAG, "Running connect() completed with " + mmSocket.isConnected());
             ManageThread = new ManageThread();
             ManageThread.start();
         }
@@ -211,39 +211,14 @@ public class MainActivity extends AppCompatActivity {
                 write(string);
             }
         });
+        pairedDevices = mBluetoothAdapter.getBondedDevices();
+        ConnectThread = new ConnectThread();
+        ConnectThread.start();
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        String pairedList = "PairedList: \n";
-        pairedDevices = mBluetoothAdapter.getBondedDevices();
-        ConnectThread = new ConnectThread();
-        ConnectThread.start();
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void write (String string) {
