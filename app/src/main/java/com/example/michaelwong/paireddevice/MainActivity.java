@@ -3,6 +3,7 @@ package com.example.michaelwong.paireddevice;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
@@ -106,10 +107,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int REQUEST_ENABLE_BT = 1;
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            if(REQUEST_ENABLE_BT == -1) {
+                pairedDevices = mBluetoothAdapter.getBondedDevices();
+                ConnectThread = new ConnectThread();
+                ConnectThread.start();
+            }
+            else {
+                finish();
+            }
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         Button healthBar100 = (Button) findViewById(R.id.healthBar100);
         healthBar100.setOnClickListener(new View.OnClickListener() {
@@ -211,9 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 write(string);
             }
         });
-        pairedDevices = mBluetoothAdapter.getBondedDevices();
-        ConnectThread = new ConnectThread();
-        ConnectThread.start();
+
     }
 
     @Override
@@ -221,10 +232,11 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
+
     public void write (String string) {
         try {
             mmOutStream.write(string.getBytes());
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.i(TAG,"Error occurred when sending data");
         }
     }
