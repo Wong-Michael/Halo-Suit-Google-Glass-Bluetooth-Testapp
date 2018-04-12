@@ -16,12 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
@@ -69,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             if (pairedDevices.size() > 0) {
                 // There are paired devices. Get the name and address of each paired device.
                 for (BluetoothDevice device : pairedDevices) {
-                    mmDevice = device;
+                    if (device.getName().equals("Michael Wong's Glass"))
+                        mmDevice = device;
                     Log.i(TAG, "Glass device: " + device.getName() + " initialized");
                 }
             }
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.i(TAG, "Connected to Glass");
             mmSocket = tmp;
-            Log.i(TAG, "Connected Glass to mmSocket");
+
         }
 
         public void  run() {
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Unable to connect; close the socket and return.
             }
-            Log.i(TAG, "Running connect() completed with " + mmSocket.isConnected());
+            Log.d("CONNECTIONBLUETOOTH" , String.valueOf(mmSocket.isConnected()));
             ManageThread = new ManageThread();
             ManageThread.start();
         }
@@ -109,17 +113,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         int REQUEST_ENABLE_BT = 1;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter.enable();
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            if(REQUEST_ENABLE_BT == -1) {
-                pairedDevices = mBluetoothAdapter.getBondedDevices();
-                ConnectThread = new ConnectThread();
-                ConnectThread.start();
-            }
-            else {
-                finish();
-            }
+        }
+        else {
+            pairedDevices = mBluetoothAdapter.getBondedDevices();
+            ConnectThread = new ConnectThread();
+            ConnectThread.start();
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String string = "{\"8 AH battery\":\"100\"}";
                 write(string);
+                Toast.makeText(MainActivity.this, "is mSocketConnected? : " + String.valueOf(mmSocket.isConnected()), LENGTH_SHORT).show();
             }
         });
         Button healthBar75 = (Button) findViewById(R.id.healthBar75);
@@ -232,12 +235,19 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        pairedDevices = mBluetoothAdapter.getBondedDevices();
+        ConnectThread = new ConnectThread();
+        ConnectThread.start();
+    }
 
     public void write (String string) {
         try {
             mmOutStream.write(string.getBytes());
         } catch (Exception e) {
-            Log.i(TAG,"Error occurred when sending data");
+            Log.i(TAG,"Error occurred when sending data " + e.getLocalizedMessage());
+            Toast.makeText(this, "error occurred with write" , Toast.LENGTH_SHORT).show();
         }
     }
 }
